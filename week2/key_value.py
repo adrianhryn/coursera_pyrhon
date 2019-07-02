@@ -16,25 +16,5 @@ def parser(d):
     return json.dumps(d)
 
 
-def main():
 
-
-    with open("log.txt", "a") as f:
-        #lines = f.readlines()
-
-        print(f.readlines())
-
-        f.write("12")
-
-    #args = parser(d)
-
-    #storage_path = os.path.join(tempfile.gettempdir(), 'storage.data')
-
-    #with open("log.txt", "a") as f:
-    #    f.write(str(args) + "\n")
-
-
-
-
-main()
 #with open(storage_path, 'w') as f:
