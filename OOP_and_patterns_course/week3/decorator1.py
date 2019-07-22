@@ -234,21 +234,17 @@ if __name__ == "__main__":
     assert(hero.get_negative_effects() == [])
     assert(hero.get_positive_effects() == [])
 
-    # накладываем эффект
     brs1 = Berserk(hero)
     assert(brs1.get_stats() == {'HP': 128, 'MP': 42, 'SP': 100, 'Strength': 22, 'Perception': 1, 'Endurance': 15, 'Charisma': -1,'Intelligence': 0, 'Agility': 15, 'Luck': 8})
     assert(brs1.get_negative_effects() == [])
     assert(brs1.get_positive_effects() == ['Berserk'])
 
-    # накладываем эффекты
     brs2 = Berserk(brs1)
     cur1 = Curse(brs2)
     assert(cur1.get_stats() == {'HP': 128, 'MP': 42, 'SP': 100, 'Strength': 27, 'Perception': -4, 'Endurance': 20,
                                 'Charisma': -6, 'Intelligence': -5, 'Agility': 20, 'Luck': 13})
     assert(cur1.get_positive_effects() == ['Berserk', 'Berserk'])
     assert(cur1.get_negative_effects() == ['Curse'])
-
-    # снимаем эффект Berserk
 
     cur1.remove_effect(cur1, "Berserk")
     assert(cur1.get_stats() == {'HP': 128, 'MP': 42, 'SP': 100, 'Strength': 20, 'Perception': -1, 'Endurance': 13, 'Charisma': -3, 'Intelligence': -2, 'Agility': 13, 'Luck': 6})
