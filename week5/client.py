@@ -12,19 +12,24 @@ class Client:
         self.base = dict()
 
     def put(self, metric, value, timestamp=None):
+        # puts a new metric to the data base
 
         try:
+
             if timestamp is None:
                 timestamp = str(int(time.time()))
 
+            # adds non-existing metric in database to it
             if metric not in self.base.keys():
                 self.base[metric] = [(timestamp, float(value))]
 
             elif metric in self.base.keys():
-
+                # if there is no other actions in 'timestamp' time, adds new value to an existing metric
                 if timestamp not in [i[0] for i in self.base[metric]]:
                     self.base[metric].append((timestamp, float(value)))
                 else:
+                    # finds appropriate timestamp and changes the value of it, because if we have a collision of two
+                    # timestamps, we should consider the last value from put
                     for ind, val in enumerate(self.base[metric]):
 
                         if val[0] == timestamp:
@@ -32,16 +37,20 @@ class Client:
                 self.base[metric].sort()
 
         except ClientError:
-            "je ne pas"
+            return "get_client_error"
 
     def get(self, metric="-999999"):
 
         try:
+            # if metric is wrong typed
             if metric == "-999999":
                 raise ClientError
+
+            # return all records from a database
             if metric is "*":
                 return self.base
 
+            # find an appropriate metric in database and return it with according value
             if metric in self.base.keys():
                 res = dict()
                 res[metric] = self.base[metric]
@@ -94,6 +103,6 @@ if __name__ == "__main__":
 
     print(client.get())
 
-    # print(client.get("non_existing_key"))
-    # print(client.get("test"))
-    # print(client.get)
+    print(client.get("non_existing_key"))
+    print(client.get("test"))
+    print(client.get)
