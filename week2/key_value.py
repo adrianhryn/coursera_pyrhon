@@ -96,7 +96,7 @@ def main():
     # get user input 
     data = get_arguments()
 
-    # data['val'] is None, if user wrote only key, so user wanted to get a value from the storage
+    # data['val'] is None, if user wrote only the key, so user wanted to get a value from the storage
     if data['val'] is None:
         print(get_value(storage, data['key']))
     else:
