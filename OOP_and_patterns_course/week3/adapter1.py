@@ -89,13 +89,13 @@ class MappingAdapter:
 
     # actions for making list that will go to sytem, using function from Light
     def lighten(self):
-        map = self.adaptee.generate_lights()  # all lights and obstacaals add in this func
-        return map
+        map_ = self.adaptee.generate_lights()  # all lights and obstacaals add in this func
+        return map_
 
 
-map = [[0 for i in range(5)] for _ in range(5)]
+map_ = [[0 for i in range(5)] for _ in range(5)]
 system = System()
-light = Light([len(map[0]), len(map)])
+light = Light([len(map[0]), len(map_)])
 adapter = MappingAdapter(light)
 
 
