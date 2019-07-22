@@ -1,4 +1,7 @@
 class Light:
+    """
+    Describes how light and obstacles should be added to the map
+    """
 
     def __init__(self, dim):
         self.dim = dim
@@ -11,6 +14,9 @@ class Light:
         return [[0 for i in range(dim[0])] for _ in range(dim[1])]
 
     def set_lights(self):
+        """
+        You can substitute your own way of adding lights
+        """
         self.lights = []
 
         for i in range(self.dim[1]):
@@ -19,6 +25,9 @@ class Light:
                     self.lights.append((i, j))
 
     def set_obstacles(self):
+        """
+        You can substitute your own way of adding obstacles
+        """
         self.obstacles = []
 
         for i in range(self.dim[1]):
@@ -27,9 +36,11 @@ class Light:
                     self.obstacles.append((i, j+1))
 
     def generate_lights(self):
+        # adds lights and obstacles marks
         self.set_lights()
         self.set_obstacles()
 
+        # adds a light point or obstacle point to the map, if there is no any marks - adds an empty space mark
         for i in range(self.dim[1]):
             for j in range(self.dim[0]):
                 if (i, j) in self.lights:
@@ -43,21 +54,27 @@ class Light:
 class System:
 
     def __init__(self):
-        self.map = [[0 for i in range(10)] for _ in range(10)]
+        # just some space
+        self.map = []
 
     def get_lightening(self, light_mapper):
         self.lightmap = light_mapper.lighten()
         return self.__str__()
 
     def __str__(self):
+        """
+        Visualizes map in 2D format. 1 is a mark for a "light" on a map (-1 is a mark for an "obstacle")
+        :return: str
+        """
         res = ""
-
+        light_place = 1
+        obstacle_place = -1
         for i in self.lightmap:
             row_res = ""
             for j in i:
-                if j == 1:
+                if j == light_place:
                     row_res += "*"
-                elif j == -1:
+                elif j == obstacle_place:
                     row_res += str("|")
                 else:
                     row_res += " "
@@ -76,8 +93,6 @@ class MappingAdapter:
         return map
 
 
-
-
 map = [[0 for i in range(5)] for _ in range(5)]
 system = System()
 light = Light([len(map[0]), len(map)])
@@ -85,7 +100,3 @@ adapter = MappingAdapter(light)
 
 
 print(system.get_lightening(adapter))
-
-
-
-
