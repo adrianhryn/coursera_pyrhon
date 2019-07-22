@@ -51,18 +51,23 @@ class Hero(AbstractEffect):
         return self.stats.copy()
 
     def remove_effect(self, buff, name):
+        """
+        Checks on name, if removing effect name is correct, remove an effect on hero
+        """
         if name == "Berserk":
+            # remove the Berserk effect(name) from a positive effects list, but only once!
             for i in buff.positive_effects:
                 if i == "Berserk":
                     buff.positive_effects.pop(buff.positive_effects.index(i))
                     break
-
+            # remove all Berserk effects from hero stats
             for i in ["Strength", "Luck", "Agility", "Endurance"]:
                 self.stats[i] = self.stats[i] - 7
 
             for i in ["Perception", "Charisma", "Intelligence"]:
                 self.stats[i] = self.stats[i] + 3
 
+        # the same as with Berserk effect
         if name == "Curse":
             for i in buff.negative_effects:
                 if i == "Berserk":
@@ -74,6 +79,10 @@ class Hero(AbstractEffect):
 
 
 class AbstractPositive(AbstractEffect):
+    """
+    Lists all function that should be in positive effect buffs
+    Use all functions from the last objects
+    """
 
     def __init__(self, obj):
         self.obj = obj
@@ -92,6 +101,9 @@ class AbstractPositive(AbstractEffect):
 
 
 class AbstractNegative(AbstractEffect):
+    """
+    Same as with AbstractPositive
+    """
 
     def __init__(self, obj):
         self.obj = obj
@@ -110,6 +122,9 @@ class AbstractNegative(AbstractEffect):
 
 
 class Berserk(AbstractPositive):
+    """
+    Describes Berserk buff. The constructor initialize all changes to hero stats
+    """
 
     def __init__(self, obj):
         AbstractPositive.__init__(self, obj)
@@ -130,6 +145,9 @@ class Berserk(AbstractPositive):
 
 
 class Blessing(AbstractPositive):
+    """
+    Describes Blessing buff. The constructor initialize all changes to hero stats
+    """
 
     def __init__(self, obj):
         AbstractPositive.__init__(self, obj)
@@ -147,6 +165,9 @@ class Blessing(AbstractPositive):
 
 
 class Weakness(AbstractNegative):
+    """
+    Describes Weakness buff. The constructor initialize all changes to hero stats
+    """
 
     def __init__(self, obj):
         AbstractNegative.__init__(self, obj)
@@ -164,6 +185,9 @@ class Weakness(AbstractNegative):
 
 
 class Curse(AbstractNegative):
+    """
+    Describes Curse buff. The constructor initialize all changes to hero stats
+    """
 
     def __init__(self, obj):
         AbstractNegative.__init__(self, obj)
@@ -181,6 +205,9 @@ class Curse(AbstractNegative):
 
 
 class EvilEye(AbstractNegative):
+    """
+    Describes EvilEye buff. The constructor initialize all changes to hero stats
+    """
 
     def __init__(self, obj):
         AbstractNegative.__init__(self, obj)
@@ -197,8 +224,7 @@ class EvilEye(AbstractNegative):
 
 
 if __name__ == "__main__":
-    from deco import *
-    # создаем героя
+    # checks on train inputs from Coursera
     hero = Hero()
     assert (hero.get_stats() == {'HP': 128, 'MP': 42, 'SP': 100, 'Strength': 15, 'Perception': 4, 'Endurance': 8,
                          'Charisma': 2, 'Intelligence': 3,'Agility': 8, 'Luck': 1})
@@ -229,3 +255,4 @@ if __name__ == "__main__":
 
     assert (cur1.get_positive_effects() == ['Berserk'])
     assert(cur1.get_negative_effects() == ['Curse'])
+
